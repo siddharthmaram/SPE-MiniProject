@@ -7,7 +7,9 @@ pipeline {
         stage('Clone Git')
         {
             steps {
-                git 'https://github.com/siddharthmaram/SPE-MiniProject.git'
+                git branch: 'main',
+                url: 'https://github.com/siddharthmaram/SPE-MiniProject.git',
+                credentialsId: 'github'
             }
         }
 
