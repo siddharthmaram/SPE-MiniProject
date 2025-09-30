@@ -23,7 +23,7 @@ pipeline {
         stage ('Create Docker Image')
         {
             steps {
-                sh "docker build -t spe-miniproject ."
+                sh "docker build -t spe-miniproject:latest ."
             }
         }
 
@@ -33,7 +33,6 @@ pipeline {
                 script {
                     withCredentials([usernamePassword(credentialsId: env.DOCKER_CREDS_ID, passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
                         sh "docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}"
-                        sh "docker build -t ${DOCKER_USERNAME}/spe-miniproject:latest ."
                         sh "docker push ${DOCKER_USERNAME}/spe-miniproject:latest"
                     }
                 }
