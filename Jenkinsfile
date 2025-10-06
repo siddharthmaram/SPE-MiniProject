@@ -23,7 +23,7 @@ pipeline {
         stage ('Create Docker Image')
         {
             steps {
-                sh "docker build -t spe-miniproject:latest ."
+                sh "docker build -t siddharthmaram/spe-miniproject:latest ."
             }
         }
 
