@@ -1,0 +1,28 @@
+---
+- name: Deploy application
+  hosts: myhosts
+  become: yes
+  collections:
+    - community.docker
+  tasks:
+    - name: Remove existing container
+      community.docker.docker_container:
+        name: deploy
+        state: absent
+        force_kill: true
+
+    - name: Pull image
+      community.docker.docker_image:
+        name: siddharthmaram/spe-miniproject:latest
+        source: pull
+
+    - name: Run interactive app
+      community.docker.docker_container:
+        name: deploy
+        image: siddharthmaram/spe-miniproject:latest
+        state: started
+        tty: true
+        interactive: true
+        restart_policy: "no"
+        detach: true
+
