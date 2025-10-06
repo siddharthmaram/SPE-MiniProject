@@ -106,6 +106,10 @@ public class Main {
                 exit = true;
             }
 
+            if (!exit) {
+                System.out.print("Press Enter to continue...");
+                scanner.nextLine();
+            }
             System.out.println();
         }
     }
