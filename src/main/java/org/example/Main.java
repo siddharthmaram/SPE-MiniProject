@@ -63,6 +63,10 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
 
+        System.out.print("Welcome to Scientific Calculator!");
+        System.out.print("Press Enter to start...");
+        scanner.nextLine();
+
         boolean exit = false;
 
         while (!exit) {
