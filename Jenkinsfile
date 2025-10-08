@@ -56,7 +56,7 @@ pipeline {
         always {
             emailext(
                 subject: "${currentBuild.currentResult}: ${env.JOB_NAME} ${env.BUILD_NUMBER}",
-                to: "bob@example.com",
+                to: "siddarth.maram@gmail.com",
                 body: "${env.BUILD_URL}"
             )
             cleanWs()

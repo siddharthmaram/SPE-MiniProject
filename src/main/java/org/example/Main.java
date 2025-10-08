@@ -111,6 +111,7 @@ public class Main {
             }
 
             if (!exit) {
+                System.out.println();
                 System.out.print("Press Enter to continue...");
                 scanner.nextLine();
             }
