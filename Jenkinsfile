@@ -55,9 +55,12 @@ pipeline {
     post {
         always {
             emailext(
-                subject: "${currentBuild.currentResult}: ${env.JOB_NAME} ${env.BUILD_NUMBER}",
-                to: "siddarth.maram@gmail.com",
-                body: "${env.BUILD_URL}"
+                  to: 'siddarth.maram@gmail.com',
+                  from: 'Jenkins-Master <siddarth.maram@gmail.com>',
+                  subject: "Build ${env.JOB_NAME} #${env.BUILD_NUMBER} - ${currentBuild.currentResult}",
+                  body: "Details: ${env.BUILD_URL}",
+                  mimeType: 'text/plain',
+                  attachLog: true
             )
             cleanWs()
         }
