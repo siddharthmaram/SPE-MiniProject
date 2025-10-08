@@ -4,7 +4,7 @@ pipeline {
 
     environment {
         DOCKER_CREDS_ID = 'dockerhub-creds'
-        DOCKER_IMAGE_NAME = 'SPE-MiniProject'
+        DOCKER_IMAGE_NAME = 'spe-miniproject'
         DOCKERHUB_REPO    = 'siddharthmaram'
     }
 
@@ -28,7 +28,7 @@ pipeline {
         stage ('Create Docker Image')
         {
             steps {
-                sh "docker build -t ${DOCKERHUB_REPO}/${DOCKER_IMAGE_NAME} ."
+                sh "docker build -t ${DOCKERHUB_REPO}/${DOCKER_IMAGE_NAME}:latest ."
             }
         }
 
@@ -38,7 +38,7 @@ pipeline {
                 script {
                     withCredentials([usernamePassword(credentialsId: env.DOCKER_CREDS_ID, passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
                         sh "docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}"
-                        sh "docker push ${DOCKERHUB_REPO}/${DOCKER_IMAGE_NAME}"
+                        sh "docker push ${DOCKERHUB_REPO}/${DOCKER_IMAGE_NAME}:latest"
                     }
                 }
             }
