@@ -50,6 +50,16 @@ pipeline {
                 ansiblePlaybook(playbook: 'playbook.yml', inventory: 'inventory.ini')
             }
         }
+    }
 
+    post {
+        always {
+            emailext(
+                subject: "${currentBuild.currentResult}: ${env.JOB_NAME} ${env.BUILD_NUMBER}",
+                to: "bob@example.com",
+                body: "${env.BUILD_URL}"
+            )
+            cleanWs()
+        }
     }
 }
