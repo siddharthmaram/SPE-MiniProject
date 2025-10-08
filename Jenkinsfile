@@ -1,8 +1,13 @@
 pipeline {
     agent any
+    triggers { githubPush() }
+
     environment {
         DOCKER_CREDS_ID = 'dockerhub-creds'
+        DOCKER_IMAGE_NAME = 'SPE-MiniProject'
+        DOCKERHUB_REPO    = 'siddharthmaram'
     }
+
     stages {
         stage('Clone Git')
         {
@@ -23,7 +28,7 @@ pipeline {
         stage ('Create Docker Image')
         {
             steps {
-                sh "docker build -t siddharthmaram/spe-miniproject:latest ."
+                sh "docker build -t ${DOCKERHUB_REPO}/${DOCKER_IMAGE_NAME} ."
             }
         }
 
@@ -33,18 +38,16 @@ pipeline {
                 script {
                     withCredentials([usernamePassword(credentialsId: env.DOCKER_CREDS_ID, passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
                         sh "docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}"
-                        sh "docker push ${DOCKER_USERNAME}/spe-miniproject:latest"
+                        sh "docker push ${DOCKERHUB_REPO}/${DOCKER_IMAGE_NAME}"
                     }
                 }
             }
         }
 
-        stage ('Deploy')
+        stage ('Deploy using Ansible')
         {
             steps {
-                script {
-                    sh 'ansible-playbook -i inventory.ini playbook.yml'
-                }
+                ansiblePlaybook(playbook: 'playbook.yml', inventory: 'inventory.ini')
             }
         }
 
