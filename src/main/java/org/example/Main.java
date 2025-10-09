@@ -63,13 +63,15 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
 
-        System.out.print("Welcome to Scientific Calculator!");
+        System.out.println("Welcome to Scientific Calculator!");
         System.out.print("Press Enter to start...");
         scanner.nextLine();
 
         boolean exit = false;
 
         while (!exit) {
+            System.out.print("\033[H\033[2J");
+            System.out.flush();
             printMenu();
 
             int choice = getInteger(scanner, "Enter your choice: ");
